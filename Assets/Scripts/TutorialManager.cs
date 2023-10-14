@@ -19,8 +19,9 @@ public class TutorialManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void Update()
+    /*private void Update()
     {
+        //Инпут нажатия мышкой для теста
         if (Input.GetMouseButtonDown(0)) // ПОМЕНЯТЬ НА ИНПУТ НАЖАТИЯ НА ТЕЛЕФОНЕ!!!
         {
             if (currentStep < tutorialBackground.transform.childCount)
@@ -33,9 +34,30 @@ public class TutorialManager : MonoBehaviour
                 RedoTutorial();
             }
         }
+    }*/
+
+    private void Update()
+    {
+        // Инпут нажатия на экран телефона
+        if(Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0); // Одно нажатие на экран
+            if (touch.phase == TouchPhase.Began)
+            {
+                if (currentStep < tutorialBackground.transform.childCount)
+                {
+                    currentStep++;
+                    ShowTutorialStep(currentStep);
+                }
+                else
+                {
+                    RedoTutorial();
+                }
+            }
+        }
     }
 
-    private void ShowTutorialStep(int stepIndex)
+    private void ShowTutorialStep(int stepIndex) // Сделать появление туториала по каждому шагу как в фигме
     {
         int childCount = tutorialBackground.transform.childCount;
 
@@ -59,7 +81,18 @@ public class TutorialManager : MonoBehaviour
         currentStep = tutorialBackground.transform.childCount;
     }
 
+    public void OnRedoYesButtonClicked()
+    {
+        redoTutorialPanel.SetActive(false);
 
+        currentStep = 0;
+        ShowTutorialStep(currentStep);
+    }
+
+    public void OnRedoNoButtonClicked()
+    {
+        StartARScene();
+    }
 
     private void StartARScene()
     {
