@@ -861,6 +861,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   raycastManager: {fileID: 1302473838}
   objectToPlace: {fileID: 2742922797680778822, guid: 4f23feb5f4cac6943bcd53f23ab46750, type: 3}
+  aRPlaneManager: {fileID: 1302473839}
 --- !u!1 &1390764424
 GameObject:
   m_ObjectHideFlags: 0

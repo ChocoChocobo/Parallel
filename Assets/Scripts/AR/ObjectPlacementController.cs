@@ -9,10 +9,24 @@ public class ObjectPlacementController : MonoBehaviour
 {
     [SerializeField] private ARRaycastManager raycastManager;
     [SerializeField] private GameObject objectToPlace;
+    [SerializeField] private ARPlaneManager aRPlaneManager;
 
     private UnityEngine.Pose placementPose;
     private bool placementPoseIsValid = false;
     private GameObject placedObject;
+
+    // Для включения и выключения Planes
+    private bool planesEnabled = false;
+
+    private void Start()
+    {
+        if (aRPlaneManager == null)
+        {
+            Debug.LogError("AR Plane Manager не подключен в скрипте");
+            return;
+        }
+        aRPlaneManager.enabled = !planesEnabled;
+    }
 
     private void Update()
     {
@@ -43,7 +57,7 @@ public class ObjectPlacementController : MonoBehaviour
         if (placementPoseIsValid)
         {
             placementPose = hits[0].pose;
-        }
+        }       
     }
 
     // Для индикатора в будущем 
@@ -62,7 +76,7 @@ public class ObjectPlacementController : MonoBehaviour
     private void PlaceObject()
     {
         // Инициализируем объект на месте Pose, имея его позицию в пространстве и rotation
-        placedObject = Instantiate(objectToPlace, placementPose.position, placementPose.rotation);        
+        placedObject = Instantiate(objectToPlace, placementPose.position, placementPose.rotation);   
     }
 
     private void RemoveObject()
